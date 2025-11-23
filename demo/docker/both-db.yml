@@ -1,0 +1,38 @@
+version: '3.8'
+
+
+volumes:
+  new_db_data:
+  old_db_data:
+
+services:
+  new-db:
+    image: postgres:15
+    container_name: new_housing_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: new_housing_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - new_db_data:/var/lib/postgresql/data
+
+
+  old-db:
+    image: postgres:15
+    container_name: old_legacy_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: legacy_data_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - old_db_data:/var/lib/postgresql/data
+
+
+    depends_on:
+      - new-db

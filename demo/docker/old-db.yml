@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: old_db_homes
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: old_db_homes
+    ports:
+      - "5433:5432"
+    volumes:
+      - old_db_data:/var/lib/postgresql/data
+
+
+volumes:
+  old_db_data:
